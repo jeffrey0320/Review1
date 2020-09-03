@@ -3,21 +3,31 @@ import java.util.ArrayList;
 public class Customer {
     private String customerNum;
     private String name;
-    private double balanceDue;
-    ArrayList<Transaction> transactions;
+    private double preBalanceDue;
+    private double postBalanceDue;
+    private double initialBal;
+    private ArrayList<Transaction> transactions;
 
-    public Customer(String customerNum, String name, double balanceDue) {
+    public Customer(String customerNum, String name, double preBalanceDue) {
         this.customerNum = customerNum;
         this.name = name;
-        this.balanceDue = balanceDue;
+        this.preBalanceDue = preBalanceDue;
+        this.initialBal = preBalanceDue;
+        transactions = new ArrayList<>();
     }
 
-    public void makePayment(){
-        for (Transaction transaction : transactions) {
-            if (transaction.getTransactionType().equals("O")) {
-                
-            }
-        }
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void makePayment(Transaction payment, Customer info){
+        setPostBalanceDue(info.getPreBalanceDue() - payment.getAmountOfPayment());
+        this.preBalanceDue = info.getPostBalanceDue();
+    }
+
+    public void makeOrder(Transaction order, Customer info){
+        setPostBalanceDue(info.getPreBalanceDue() + order.getTotalCost());
+        this.preBalanceDue = info.getPostBalanceDue();
     }
 
     public String getCustomerNum() {
@@ -28,11 +38,27 @@ public class Customer {
         return name;
     }
 
-    public double getBalanceDue() {
-        return balanceDue;
+    public double getPreBalanceDue() {
+        return preBalanceDue;
+    }
+
+    public double getPostBalanceDue(){
+        return postBalanceDue;
     }
 
     public void addTransaction(Transaction transaction){
         transactions.add(transaction);
+    }
+
+    private void setPreBalanceDue(double preBalanceDue){
+        this.preBalanceDue = preBalanceDue;
+    }
+
+    private void setPostBalanceDue(double newBalance){
+        this.postBalanceDue = newBalance;
+    }
+
+    public double getInitialBal() {
+        return initialBal;
     }
 }
