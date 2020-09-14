@@ -3,3 +3,5 @@
 0003 Jessica 84.67
 0004 Brenda 24.75
 0005 Christopher 231.25
+0006 Henry 20.50
+0007 Amy 0.00
